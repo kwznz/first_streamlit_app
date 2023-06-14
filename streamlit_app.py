@@ -2,13 +2,12 @@ import streamlit
 import pandas as pd
 import requests
 import snowflake.connector
-#Snowflake connection details
+#Snowflake connection details, start an sql cursor and load one row from the fruit_load_list
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_cur = my_cnx.cursor()
 my_cur.execute("select * from fruit_load_list")
-my_data_row = my_cur.fetchone()
-streamlit.text("The fruit load list contains:")
-streamlit.text(my_data_row)
+my_data_row = my_cur.fetchall()
+
 
 streamlit.title("My Mom's New Healthy Diner")
 
@@ -41,3 +40,7 @@ fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+fruit_cho
 fruityvice_normalized = pd.json_normalize(fruityvice_response.json())
 #display a df of the normalized json
 streamlit.dataframe(fruityvice_normalized)
+
+#Moved the following from the connection details block in row 5
+streamlit.header("The fruit load list contains:")
+streamlit.dataframe(my_data_row)
