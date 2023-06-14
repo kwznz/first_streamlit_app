@@ -44,3 +44,4 @@ streamlit.dataframe(fruityvice_normalized)
 #Moved the following from the connection details block in row 5
 streamlit.header("The fruit load list contains:")
 streamlit.dataframe(my_data_row)
+fruit_request = streamlit.text_input('What fruit would you like to add?', 'Borange')
