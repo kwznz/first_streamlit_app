@@ -46,6 +46,5 @@ streamlit.header("The fruit load list contains:")
 streamlit.dataframe(my_data_row)
 fruit_request = streamlit.text_input('What fruit would you like to add?', 'Borange')
 streamlit.write("Thanks for adding ", fruit_request)
-if 'mango' in streamlit.dataframe(my_data_row):
-    streamlit.text("There's an orange")
+print(my_cursor.execute("select * from fruit_load_list where fruit_name == 'mango'").fetchall())
 #my_cur.execute("insert into fruit_load_list values ('teststreamlit')")
