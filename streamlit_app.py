@@ -4,6 +4,12 @@ import requests
 import snowflake.connector
 from urllib.error import URLError
 
+#defines
+def get_fruityvice_data(fruit_choices):
+    fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+fruit_choice)
+    fruityvice_normalized = pd.json_normalize(fruityvice_response.json())
+    return fruityvice_normalized
+
 #Snowflake connection details, start an sql cursor and load one row from the fruit_load_list
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_cur = my_cnx.cursor()
@@ -40,9 +46,7 @@ try:
         streamlit.error("Please Select a fruit to get information.")
 #get requests from fruityvice about the chosen fruit
     else:
-        fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+fruit_choice)
-        fruityvice_normalized = pd.json_normalize(fruityvice_response.json())
-        streamlit.dataframe(fruityvice_normalized)
+        streamlit.dataframe(get_fruityvice_data(fruit_choice))
 except URLError as e:
     streamlit.error("Oops!")
 
