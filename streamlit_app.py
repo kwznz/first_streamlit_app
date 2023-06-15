@@ -53,14 +53,15 @@ except URLError as e:
     streamlit.error("Oops!")
 
 #Moved the following from the connection details block in row 5
-streamlit.header("The fruit load list contains:")
+streamlit.title("View our Fruit list - Add Your Favorites!")
 #Snowflake connection details, start an sql cursor and load one row from the fruit_load_list
 if streamlit.button("Get Fruit Load List"):
     my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-    #my_data_row = get_fruit_load_list()
+    my_cnx.close()
     streamlit.dataframe(get_fruit_load_list())
 
 fruit_request = streamlit.text_input('What fruit would you like to add?')
 if streamlit.button('Add Fruit!'):
     my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+    my_cnx.close()
     streamlit.text(insert_row_snowflake(fruit_request))
