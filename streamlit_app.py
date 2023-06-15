@@ -10,7 +10,7 @@ def get_fruityvice_data(fruit_choices):
     fruityvice_normalized = pd.json_normalize(fruityvice_response.json())
     return fruityvice_normalized
 def get_fruit_load_list():
-    with my_cnx,cursor as my_cur:
+    with my_cnx.cursor() as my_cur:
         my_cur.execute("select * from fruit_load_list")
         return my_cur.fetchall()
 
@@ -60,5 +60,5 @@ if streamlit.button("Get Fruit Load List"):
 
 fruit_request = streamlit.text_input('What fruit would you like to add?', 'Borange')
 streamlit.write("Thanks for adding ", fruit_request)
-if (my_cur.execute("select * from fruit_load_list where fruit_name = 'teststreamlit'").fetchall()) == []:
-    my_cur.execute("insert into fruit_load_list values ('teststreamlit')")
+#if (my_cur.execute("select * from fruit_load_list where fruit_name = 'teststreamlit'").fetchall()) == []:
+#    my_cur.execute("insert into fruit_load_list values ('teststreamlit')")
